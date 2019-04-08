@@ -126,7 +126,7 @@ function filterData(result){
                 list.push(items[item]);
             };
             values.push(list);
-            
+
         });
 
     keys = keys.filter(onlyUnique); 
