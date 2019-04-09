@@ -13,7 +13,9 @@
 
 //Route::get('/', 'ClientsController@index');
 
-Route::get('/',  ['as' => 'clientes', 'uses' => 'ClientsController@index']);
+//Route::get('/',  ['as' => 'clientes', 'uses' => 'ClientsController@index']);
+//Nueva linea añadida
+Route::get('/',  ['as' => 'clientes', 'uses' => 'ClientsController@getindex']);
 
 Route::post('/clients/create','ClientsController@create');
 

@@ -12,6 +12,13 @@ use DB;
 
 class ClientsController extends Controller
 {
+    public function getindex(){
+        return view('clients.clientes');
+    }
+    public function apiclientes(){
+        $clientes = DB::table('clientes')->select('id','Nombre','Direccion','Localidad','cif/nif')->get();
+        return $clientes;
+    }
     public function index(Request $request){
         if($request->has('filtro')){
             $filtro=$request->input('filtro');

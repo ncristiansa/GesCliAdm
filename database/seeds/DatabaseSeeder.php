@@ -13,8 +13,8 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('clientes')->delete();
-        DB::table('ventas')->delete();
+       DB::table('clientes')->delete();
+       DB::table('ventas')->delete();
             
         //CREACIÓN DE CLIENTES
         for ($i=0; $i < 30; $i++) {

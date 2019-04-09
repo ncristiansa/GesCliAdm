@@ -1,5 +1,31 @@
 var global_countTime;
+var URLAjax = "/api/clientes";
+function crearEnlaces(){
+    $('.clickable').each(function(){
+        $(this).attr("data-href","/clients/"+$(this).attr("id"));
+   })
 
+   $('.clickable').click(function(){
+        window.location=$(this).data('href');
+   });
+}
+function clientesAjax(){
+
+    $.ajax({
+        url:URLAjax
+
+    })
+    .done(function(res){
+
+        CreateTable($("#ClientsTable"),res);
+        crearEnlaces();
+        
+    })
+    .fail(function(jqXHR,textStatus){
+        console.log("fail: "+textStatus);
+    });
+
+}
 function uniqueError(id){
     var control = true;
     $('.Error').each(function(){
