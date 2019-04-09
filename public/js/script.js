@@ -19,6 +19,7 @@ function clientesAjax(){
 
         CreateTable($("#ClientsTable"),res);
         crearEnlaces();
+        createFilter('#ClientsTable table thead',"/","clientes","table");
         
     })
     .fail(function(jqXHR,textStatus){

@@ -15,9 +15,30 @@ class ClientsController extends Controller
     public function getindex(){
         return view('clients.clientes');
     }
-    public function apiclientes(){
-        $clientes = DB::table('clientes')->select('id','Nombre','Direccion','Localidad','cif/nif')->get();
-        return $clientes;
+    public function apiclientes(Request $request){
+        if($request->has('filtro')){
+            $filtro=$request->input('filtro');
+            $clientes=DB::table('clientes')
+                            ->select('id', 'Nombre', 'Localidad', 'cif/nif')
+                            ->where('nombre','LIKE',"%".$request->input('filtro')."%")
+                            ->orwhere('localidad','LIKE',"%".$request->input('filtro')."%")
+                            ->orwhere('cif/nif','LIKE',"%".$request->input('filtro')."%")
+                            ->paginate(10)
+                            ->appends('filtro',$filtro);
+            //$clientes = DB::table('clientes')->select('id','Nombre','Direccion','Localidad','cif/nif')->get();
+            return $clientes;
+            
+        }else{
+        $filtro=null;
+        $clientes = DB::table('clientes')
+                ->select('id', 'Nombre', 'Localidad', 'cif/nif')
+                ->paginate(10);
+                return $clientes;
+
+
+        }
+        //$clientes = DB::table('clientes')->select('id','Nombre','Direccion','Localidad','cif/nif')->get();
+        //return $clientes;
     }
     public function index(Request $request){
         if($request->has('filtro')){
