@@ -1,5 +1,6 @@
 
-    <script>
+    
+    <script defer>
         
         var clientes = {!! json_encode($clientes->toArray(), JSON_HEX_TAG) !!} ;
 
@@ -20,3 +21,5 @@
         $('input[name="filtro"]').val('{{$filtro}}');
 
     </script>
+    <div id="ClientsTable"></div>
+    {!!$clientes->render()!!}

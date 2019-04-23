@@ -22,6 +22,7 @@
     
     <div id="ClientsTable"></div>
     {!!$clientes->render()!!}
+    
     <script>
         
         var clientes = {!! json_encode($clientes->toArray(), JSON_HEX_TAG) !!} ;
