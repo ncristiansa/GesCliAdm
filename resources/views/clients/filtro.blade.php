@@ -1,6 +1,6 @@
 
     
-    <script defer>
+    <script>
         
         var clientes = {!! json_encode($clientes->toArray(), JSON_HEX_TAG) !!} ;
 

@@ -17,6 +17,7 @@ $(document).on("click", ".pagination a", function(event){
             $("#ClientsTable").html(data);
             //$(this).attr('href':ruta+'page='+page);
             //history.pushState(null, "", ruta+'page='+page);
+            
         }
     })
     

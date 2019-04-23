@@ -19,15 +19,10 @@
             
         </div>
     </div>
-    
-    <div id="ClientsTable"></div>
-    {!!$clientes->render()!!}
-    
+    <div id="ClientsTable"> {!!$clientes->render()!!}</div>
     <script>
         
         var clientes = {!! json_encode($clientes->toArray(), JSON_HEX_TAG) !!} ;
-
-        console.log(clientes)
 
         CreateTable("#ClientsTable",clientes.data,undefined);
 
@@ -44,6 +39,7 @@
         $('input[name="filtro"]').val('{{$filtro}}');
 
     </script>
+        
 @stop
 
 @section('modal')
