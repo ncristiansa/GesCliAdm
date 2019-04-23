@@ -13,27 +13,37 @@ use DB;
 class ClientsController extends Controller
 {
     public function index(Request $request){
-        if($request->has('filtro')){
-            $filtro=$request->input('filtro');
-            $clientes=DB::table('clientes')
-                            ->select('id', 'Nombre', 'Localidad', 'cif/nif')
-                            ->where('nombre','LIKE',"%".$request->input('filtro')."%")
-                            ->orwhere('localidad','LIKE',"%".$request->input('filtro')."%")
-                            ->orwhere('cif/nif','LIKE',"%".$request->input('filtro')."%")
-                            ->paginate(10)
-                            ->appends('filtro',$filtro);
-            return view('clients.clientes', compact('clientes','filtro'));
+        if ($request->ajax()){
             
-        }else{
-        $filtro=null;
-        $clientes = DB::table('clientes')
-                ->select('id', 'Nombre', 'Localidad', 'cif/nif')
-                ->paginate(10);            
+            if($request->has('filtro')){
+                $filtro=$request->input('filtro');
+                $clientes=DB::table('clientes')
+                                ->select('id', 'Nombre', 'Localidad', 'cif/nif')
+                                ->where('nombre','LIKE',"%".$request->input('filtro')."%")
+                                ->orwhere('localidad','LIKE',"%".$request->input('filtro')."%")
+                                ->orwhere('cif/nif','LIKE',"%".$request->input('filtro')."%")
+                                ->paginate(10)
+                                ->appends('filtro',$filtro);
+                return response()->json(view('clients.filtro', compact('clientes','filtro'))->render());
                 return view('clients.clientes', compact('clientes','filtro'));
-
-
+                
+            }else{
+            $filtro=null;
+            $clientes = DB::table('clientes')
+                    ->select('id', 'Nombre', 'Localidad', 'cif/nif')
+                    ->paginate(10);     
+                return response()->json(view('clients.filtro', compact('clientes','filtro'))->render());    
+                return view('clients.clientes', compact('clientes','filtro'));    
+            }
         }
-
+        //se necesita para mostrarlo al menos por primera vez
+        else{
+            $filtro=null;
+            $clientes = DB::table('clientes')
+                    ->select('id', 'Nombre', 'Localidad', 'cif/nif')
+                    ->paginate(10);            
+                    return view('clients.clientes', compact('clientes','filtro'));    
+            }
     }
 
     public function create(Request $request){
