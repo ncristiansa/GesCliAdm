@@ -2,22 +2,19 @@
 
 $(document).on("click", ".pagination a", function(event){
     event.preventDefault();
-    var paginacion = $(this).attr('href').split('page=');
-    var page = paginacion[1];
-    var ruta = paginacion[0];
-    ruta = ruta.replace('/clients/create', '');
-
-    
+    //Recibimos el numero de la paginación
+    var pagina = $(this).attr('href').split('page=')[1];
+    //Obtenemos la URL
+    var ruta = $(this).attr('href').split('page=')[0];
+    //ruta API
+    ruta = ruta.replace('/api/clientes', '');
     $.ajax({
         url: ruta,
-        data: {page: page},
+        data: {page: pagina},
         type: 'GET',
         dataType: 'json',
         success: function(data){
             $("#ClientsTable").html(data);
-            //$(this).attr('href':ruta+'page='+page);
-            //history.pushState(null, "", ruta+'page='+page);
-            
         }
     })
     
@@ -25,13 +22,9 @@ $(document).on("click", ".pagination a", function(event){
 //Funcion ajax para recargar listado de clientes con el filtro
 $(document).on("click", "#ClientsTable input[value='Filtrar']", function(event){
     event.preventDefault();
-
     var valorFiltro = $("input[name='filtro']").val();
-    var url = window.location.origin;
-
-    ruta = url.replace('/clients/create', '');
-
-    
+    var url = window.location.origin+"/api/clientes";
+    ruta = url.replace('/api/clientes', '');
     $.ajax({
         url: ruta,
         data: {filtro: valorFiltro},

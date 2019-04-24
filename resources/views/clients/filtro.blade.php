@@ -12,6 +12,8 @@
          window.location=$(this).data('href');
     });
      $('input[name="filtro"]').val('{{$filtro}}');
+     //Como enviaremos mediante json esta vista desde el controlador y la paginación se mostrará en la parte superior, vamos a añadirlo debajo de la tabla
+     $("#ClientsTable").append($(".pagination"));
  </script>
 {!!$clientes->render()!!}
 

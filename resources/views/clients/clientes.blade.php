@@ -36,6 +36,8 @@
             window.location=$(this).data('href');
        });
         $('input[name="filtro"]').val('{{$filtro}}');
+        //Añadimos la paginacion o mejor dicho el bloque de paginación debajo de la tabla
+        $("#ClientsTable").append($(".pagination"));
     </script>
        
        
