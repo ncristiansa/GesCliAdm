@@ -23,8 +23,8 @@ $(document).on("click", ".pagination a", function(event){
 $(document).on("click", "#ClientsTable input[value='Filtrar']", function(event){
     event.preventDefault();
     var valorFiltro = $("input[name='filtro']").val();
-    var url = window.location.origin+"/api/clientes";
-    ruta = url.replace('/api/clientes', '');
+    var ruta = window.location.origin;
+    console.log(ruta);
     $.ajax({
         url: ruta,
         data: {filtro: valorFiltro},
