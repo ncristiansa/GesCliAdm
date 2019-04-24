@@ -33,16 +33,18 @@ class ClientsController extends Controller
                     ->select('id', 'Nombre', 'Localidad', 'cif/nif')
                     ->paginate(10);     
                 return response()->json(view('clients.filtro', compact('clientes','filtro'))->render());    
-                return view('clients.clientes', compact('clientes','filtro'));    
+                return view('clients.clientes', compact('clientes','filtro')); 
             }
         }
-        //se necesita para mostrarlo al menos por primera vez
+
         else{
             $filtro=null;
             $clientes = DB::table('clientes')
                     ->select('id', 'Nombre', 'Localidad', 'cif/nif')
-                    ->paginate(10);            
-                    return view('clients.clientes', compact('clientes','filtro'));    
+                    ->paginate(10);
+                               
+                    return view('clients.clientes', compact('clientes','filtro'));
+    
             }
     }
 

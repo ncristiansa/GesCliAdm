@@ -6,7 +6,7 @@ $(document).on("click", ".pagination a", function(event){
     var page = paginacion[1];
     var ruta = paginacion[0];
     ruta = ruta.replace('/clients/create', '');
-    //si no hacemos el replace, cuando cree uno nuevo, no funcionara bien
+
     
     $.ajax({
         url: ruta,
@@ -30,7 +30,7 @@ $(document).on("click", "#ClientsTable input[value='Filtrar']", function(event){
     var url = window.location.origin;
 
     ruta = url.replace('/clients/create', '');
-    //si no hacemos el replace, cuando cree uno nuevo, no funcionara bien
+
     
     $.ajax({
         url: ruta,
@@ -43,5 +43,3 @@ $(document).on("click", "#ClientsTable input[value='Filtrar']", function(event){
     })
     
 })
-
-
