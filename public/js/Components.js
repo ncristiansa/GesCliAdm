@@ -116,7 +116,7 @@ function onlyUnique(value, index, self) {
 
 //Función que recibe un JSON y lo convierte en dos arrays, uno que contiene las keys y otro que contiene los valores
 function filterData(result){
-    //var result = result.data;
+    var result = result.data;
     var keys = [];
     var values = [];
         result.forEach(function(items){
