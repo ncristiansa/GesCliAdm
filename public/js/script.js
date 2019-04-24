@@ -52,7 +52,7 @@ function createFilter(parent,url,vista,tipo){
     }else if(tipo === "div"){
         $('<div>')
             .attr({class:'filterInputs'})
-            .appendTo(parent);º
+            .appendTo(parent);
     }
 
     var form = $('<form>')

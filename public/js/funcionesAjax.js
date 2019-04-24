@@ -24,7 +24,6 @@ $(document).on("click", "#ClientsTable input[value='Filtrar']", function(event){
     event.preventDefault();
     var valorFiltro = $("input[name='filtro']").val();
     var ruta = window.location.origin;
-    console.log(ruta);
     $.ajax({
         url: ruta,
         data: {filtro: valorFiltro},
