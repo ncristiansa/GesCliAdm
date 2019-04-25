@@ -48,6 +48,41 @@ class ClientsController extends Controller
             }
     }
 
+    public function index2(Request $request){
+        if ($request->ajax()){
+            
+            if($request->has('filtro')){
+                $filtro=$request->input('filtro');
+                $clientes=DB::table('clientes')
+                                ->select('id', 'Nombre', 'Localidad', 'cif/nif')
+                                ->where('nombre','LIKE',"%".$request->input('filtro')."%")
+                                ->orwhere('localidad','LIKE',"%".$request->input('filtro')."%")
+                                ->orwhere('cif/nif','LIKE',"%".$request->input('filtro')."%")
+                                ->paginate(10)
+                                ->appends('filtro',$filtro);
+                return $clientes;
+                
+                
+            }else{
+            $filtro=null;
+            $clientes = DB::table('clientes')
+                    ->select('id', 'Nombre', 'Localidad', 'cif/nif')
+                    ->paginate(10);     
+                return $clientes;   
+                 
+            }
+        }
+
+        else{
+            $filtro=null;
+            $clientes = DB::table('clientes')
+                    ->select('id', 'Nombre', 'Localidad', 'cif/nif')
+                    ->paginate(10);
+                               
+                    return $clientes;
+            }
+    }
+
     public function create(Request $request){
         //echo $request->input('cif/nif');
         //Cliente::create($request->all());

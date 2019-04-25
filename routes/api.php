@@ -28,3 +28,4 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::get('/',  ['as' => 'clientes', 'uses' => 'ClientsController@index']);
 //Route::post('/clients/create','ClientsController@create');
 Route::put('/clients/{id}', 'ClientsController@edit');
+Route::get('clientes', 'ClientsController@index2');
