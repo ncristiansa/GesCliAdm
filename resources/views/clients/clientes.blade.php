@@ -20,29 +20,27 @@
         </div>
     </div>
     
-    <div id="ClientsTable"></div>
-    {{ $clientes->links() }}
+    <div id="ClientsTable">{!!$clientes->render()!!}</div>
+    
+    
     <script>
         
         var clientes = {!! json_encode($clientes->toArray(), JSON_HEX_TAG) !!} ;
-
-        console.log(clientes)
-
         CreateTable("#ClientsTable",clientes.data,undefined);
-
         createFilter('#ClientsTable table thead',"/","clientes","table");
         
        $('.clickable').each(function(){
             $(this).attr("data-href","/clients/"+$(this).attr("id"));
        })
-
        $('.clickable').click(function(){
             window.location=$(this).data('href');
        });
-
         $('input[name="filtro"]').val('{{$filtro}}');
-
+        //Añadimos la paginacion o mejor dicho el bloque de paginación debajo de la tabla
+        $("#ClientsTable").append($(".pagination"));
     </script>
+       
+       
 @stop
 
 @section('modal')
@@ -69,6 +67,7 @@
                             <label for="email">E-Mail: <input type="text" name="email" class="input"></label>
                             <label for="telefono">Teléfono: <input type="text" name="telefono" class="input"></label>
                             <label for="cp">Código Postal: <input type="text" name="cp" class="input"></label>
+                            <input type="text" name="ruta" value="create" hidden="true">
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -83,8 +82,4 @@
             </div>
         </div>
     </div>
-   
-
 @stop
-
-
