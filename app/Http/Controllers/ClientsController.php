@@ -25,7 +25,7 @@ class ClientsController extends Controller
                                 ->paginate(10)
                                 ->appends('filtro',$filtro);
                 return response()->json(view('clients.paginacion', compact('clientes','filtro'))->render());
-                return view('clients.clientes', compact('clientes','filtro'));
+                
                 
             }else{
             $filtro=null;
@@ -33,7 +33,7 @@ class ClientsController extends Controller
                     ->select('id', 'Nombre', 'Localidad', 'cif/nif')
                     ->paginate(10);     
                 return response()->json(view('clients.paginacion', compact('clientes','filtro'))->render());    
-                return view('clients.clientes', compact('clientes','filtro')); 
+                 
             }
         }
 
