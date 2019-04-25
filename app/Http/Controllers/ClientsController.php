@@ -24,7 +24,7 @@ class ClientsController extends Controller
                                 ->orwhere('cif/nif','LIKE',"%".$request->input('filtro')."%")
                                 ->paginate(10)
                                 ->appends('filtro',$filtro);
-                return response()->json(view('clients.filtro', compact('clientes','filtro'))->render());
+                return response()->json(view('clients.paginacion', compact('clientes','filtro'))->render());
                 return view('clients.clientes', compact('clientes','filtro'));
                 
             }else{
@@ -32,7 +32,7 @@ class ClientsController extends Controller
             $clientes = DB::table('clientes')
                     ->select('id', 'Nombre', 'Localidad', 'cif/nif')
                     ->paginate(10);     
-                return response()->json(view('clients.filtro', compact('clientes','filtro'))->render());    
+                return response()->json(view('clients.paginacion', compact('clientes','filtro'))->render());    
                 return view('clients.clientes', compact('clientes','filtro')); 
             }
         }
@@ -67,22 +67,26 @@ class ClientsController extends Controller
     }
 
     public function edit(Request $request, $id){
-        try{
-            Cliente::findOrFail($id)
-                ->update([
-                    'nombre' => $request->input('nombre'),
-                    'direccion' => $request->input('direccion'),
-                    'provincia' => $request->input('provincia'),
-                    'localidad' => $request->input('localidad'),
-                    'cif/nif' => $request->input('cif/nif'),
-                    'email' => $request->input('email'),
-                    'telefono' => $request->input('telefono'),
-                    'cp' => $request->input('cp'),
-                ]);
+        if ($request->ajax()){
+            try{
+                Cliente::findOrFail($id)
+                    ->update([
+                        'nombre' => $request->input('nombre'),
+                        'direccion' => $request->input('direccion'),
+                        'provincia' => $request->input('provincia'),
+                        'localidad' => $request->input('localidad'),
+                        'cif/nif' => $request->input('cif/nif'),
+                        'email' => $request->input('email'),
+                        'telefono' => $request->input('telefono'),
+                        'cp' => $request->input('cp'),
+                    ]);
+                
+                $cliente = Cliente::where('id',$id)->get(['id','nombre','direccion','provincia','localidad','cif/nif','email','telefono','cp']);
+                return response()->json(view('clients.cli_editado', compact('cliente'))->render()); 
 
-            return redirect()->back();
-        }catch(\Exception $ex){
-            return back()->withErrors(['Error'=>'Error del servidor']);
+            }catch(\Exception $ex){
+                return back()->withErrors(['Error'=>'Error del servidor']);
+            }
         }
     }
 

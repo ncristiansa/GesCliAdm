@@ -32,6 +32,5 @@ $(document).on("click", "#ClientsTable input[value='Filtrar']", function(event){
         success: function(data){
             $("#ClientsTable").html(data);
         }
-    })
-    
-})
+    }); 
+});
