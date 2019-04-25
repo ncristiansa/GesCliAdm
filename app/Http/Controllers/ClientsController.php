@@ -48,7 +48,7 @@ class ClientsController extends Controller
             }
     }
 
-    public function index2(Request $request){
+    public function apiClientes(Request $request){
         if ($request->ajax()){
             
             if($request->has('filtro')){
