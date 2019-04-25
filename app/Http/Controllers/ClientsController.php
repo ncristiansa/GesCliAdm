@@ -9,7 +9,7 @@ use App\Archivo;
 use Illuminate\Support\Facades\Storage;
 use Symfony\Component\HttpFoundation\Response;
 use DB;
-
+use Validator;
 class ClientsController extends Controller
 {
     public function index(Request $request){
@@ -31,8 +31,9 @@ class ClientsController extends Controller
             $filtro=null;
             $clientes = DB::table('clientes')
                     ->select('id', 'Nombre', 'Localidad', 'cif/nif')
-                    ->paginate(10);     
-                return response()->json(view('clients.paginacion', compact('clientes','filtro'))->render());    
+                    ->paginate(10);
+                    return response()->json(view('clients.paginacion', compact('clientes','filtro'))->render());      
+                     
                  
             }
         }
@@ -49,56 +50,45 @@ class ClientsController extends Controller
     }
 
     public function apiClientes(Request $request){
-        if ($request->ajax()){
-            
-            if($request->has('filtro')){
-                $filtro=$request->input('filtro');
-                $clientes=DB::table('clientes')
-                                ->select('id', 'Nombre', 'Localidad', 'cif/nif')
-                                ->where('nombre','LIKE',"%".$request->input('filtro')."%")
-                                ->orwhere('localidad','LIKE',"%".$request->input('filtro')."%")
-                                ->orwhere('cif/nif','LIKE',"%".$request->input('filtro')."%")
-                                ->paginate(10)
-                                ->appends('filtro',$filtro);
+        $filtro=null;
+        $clientes = DB::table('clientes')
+                ->select('id', 'Nombre', 'Localidad', 'cif/nif')
+                ->paginate(10);            
                 return $clientes;
-                
-                
-            }else{
-            $filtro=null;
-            $clientes = DB::table('clientes')
-                    ->select('id', 'Nombre', 'Localidad', 'cif/nif')
-                    ->paginate(10);     
-                return $clientes;   
-                 
-            }
-        }
 
-        else{
-            $filtro=null;
-            $clientes = DB::table('clientes')
-                    ->select('id', 'Nombre', 'Localidad', 'cif/nif')
-                    ->paginate(10);
-                               
-                    return $clientes;
-            }
     }
 
     public function create(Request $request){
         //echo $request->input('cif/nif');
         //Cliente::create($request->all());
-        Cliente::create(
-            [
-                'nombre' => $request->input('nombre'),
-                'direccion' => $request->input('direccion'),
-                'provincia' => $request->input('provincia'),
-                'localidad' => $request->input('localidad'),
-                'CIF/NIF' => $request->input('cif/nif'),
-                'email' => $request->input('email'),
-                'telefono' => $request->input('telefono'),
-                'cp' => $request->input('cp'),
-            ]
-        );
-        return redirect('/');
+        if ($request -> ajax()){
+            
+            $validator = Validator::make($request->all(), [
+                'nombre' => 'required|max:100',
+                'direccion' => 'required|max:100',
+                'provincia' => 'required|max:100',
+                'localidad' => 'required|max:100',
+                'cif/nif' => 'required|clientes_nif',
+               'email' => 'required|clientes_mail|unique:clientes,email',
+               'telefono' => 'required|clientes_telefono',
+                'cp' => 'required|max:5|min:5|clientes_cp',
+                
+            ]);
+            
+            if ($validator->passes()) {
+                return $this->create($request);
+                return response()->json($request);
+    
+            }
+            return response()->json(['error'=>$validator->errors()->all()]);
+    
+        
+        }
+        //return redirect('/');
+    }
+    public function guardarDatos(Requests $request){
+        return $this->create($request);
+        return response()->json($request);
     }
 
     public function edit(Request $request, $id){

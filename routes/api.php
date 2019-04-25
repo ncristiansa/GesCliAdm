@@ -14,18 +14,18 @@ use Illuminate\Http\Request;
 */
 
 
-/*
-Route::get('clientes', 'ClientController@index');
-Route::get('clientes/{id}', 'ClientController@show');
-Route::post('clientes', 'ClientController@create');
-Route::put('clientes/{id}', 'ClientController@update');
-Route::delete('clientes/{id}', 'ClientController@delete');
-*/
-
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+Route::get('clientes', 'ClientsController@apiClientes');
+Route::get('clientes/{id}', 'ClientsController@show');
+Route::post('clientes', 'ClientsController@create');
+Route::put('clientes/{id}', 'ClientsController@update');
+Route::delete('clientes/{id}', 'ClientsController@delete');
+
+
+
 Route::get('/',  ['as' => 'clientes', 'uses' => 'ClientsController@index']);
 //Route::post('/clients/create','ClientsController@create');
+Route::post('/clients/create','ClientsController@guardarDatos');
 Route::put('/clients/{id}', 'ClientsController@edit');
-Route::get('clientes', 'ClientsController@apiClientes');

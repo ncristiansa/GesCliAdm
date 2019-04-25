@@ -19,25 +19,32 @@
             
         </div>
     </div>
+
     
-    <div id="ClientsTable">{!!$clientes->render()!!}</div>
-    
+
+    <div id="ClientsTable"></div>
+    {!!$clientes->render()!!}
     
     <script>
         
         var clientes = {!! json_encode($clientes->toArray(), JSON_HEX_TAG) !!} ;
         CreateTable("#ClientsTable",clientes.data,undefined);
-        createFilter('#ClientsTable table thead',"/","clientes","table");
+        createFilter('#ClientsTable table thead',"/api/clientes","clientes","table");
+
         
+
        $('.clickable').each(function(){
             $(this).attr("data-href","/clients/"+$(this).attr("id"));
        })
        $('.clickable').click(function(){
             window.location=$(this).data('href');
        });
+       
+       
         $('input[name="filtro"]').val('{{$filtro}}');
         //Añadimos la paginacion o mejor dicho el bloque de paginación debajo de la tabla
         $("#ClientsTable").append($(".pagination"));
+        
     </script>
        
        
@@ -57,7 +64,7 @@
                     </div>
                     <div class="modal-body">
                         <div class="modal-form">
-                        <form id="form" action="/clients/create" method="POST">
+                        <form id="form" action="/" method="POST">
                             @csrf
                             <label for="nombre">Nombre: <input type="text" name="nombre" class="input"></label>
                             <label for="direccion">Dirección: <input type="text" name="direccion" class="input"></label>

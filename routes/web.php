@@ -14,7 +14,7 @@
 //Route::get('/', 'ClientsController@index');
 Route::get('/',  ['as' => 'clientes', 'uses' => 'ClientsController@index']);
 Route::post('/clients/create','ClientsController@create');
-
+Route::post('/clients/create','ClientsController@guardarDatos');
 //Route::get('/clients/{id}', 'ClientsController@showClient');
 Route::get('/clients/{id}',  ['as' => 'cliente', 'uses' => 'ClientsController@showClient']);
 //Route::get('/sales/{id}', 'ClientsController@showSale');
