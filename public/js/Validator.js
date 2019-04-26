@@ -17,9 +17,8 @@ $('#form').submit(function(e){
 $('#form').submit(function(e){
     e.preventDefault();
     if(checkNulls() && validate()){
-		var urlr = '/clients/'+$("input[name='ruta']").val();
-		console.log(urlr);
-		ajaxCreateCliente(urlr);
+		var url_ruta = '/clients/'+$("input[name='ruta']").val();
+		crearClienteajax(url_ruta);
 		
     }
 });

@@ -36,9 +36,9 @@ $(document).on("click", "#ClientsTable input[value='Filtrar']", function(event){
 });
 
 
-function ajaxCreateCliente(urlr) {
+function crearClienteajax(url_ruta) {
     $.ajax({
-        url:urlr,
+        url:url_ruta,
         type:'POST',
         dataType: 'html',
         data:$('#form').first().serialize()    
@@ -48,9 +48,18 @@ function ajaxCreateCliente(urlr) {
         if ($("input[name='ruta']").val()=='create'){
             $('#costumModal10').modal('toggle');
             
+            $("#form input[name=nombre]").val("");
+	        $("#form input[name=direccion]").val("");
+	        $("#form input[name=provincia]").val("");
+	        $("#form input[name=localidad]").val("");
+	        $("#form input[name='cif/nif']").val("");
+	        $("#form input[name=email]").val("");
+	        $("#form input[name=telefono]").val("");
+            $("#form input[name=cp]").val("");
+            
         }
     })
-    .fail(function(jqXHR,textStatus,errorThrown){
-        console.log(""+"status:"+jqXHR.status+" "+textStatus+": "+errorThrown);
+    .fail(function(textStatus,errorThrown){
+        console.log(""+textStatus+": "+errorThrown);
     });
 }

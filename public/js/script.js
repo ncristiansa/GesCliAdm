@@ -69,8 +69,29 @@ function createFilter(parent,url,vista,tipo){
         .attr({'type':'button','value':'Resetear',class:"btn"})
         .appendTo(form);
 
-    $(reset).click(function(){window.location.assign(url)});
+    //$(reset).click(function(){window.location.assign(url)});
+    //Asignamos al boton reset que genere los datos en la tabla de clientes
+    $(reset).click(
+        function(){
+            $("input[name='filtro']").val("");
+            
+            var valorFiltro = $("input[name='filtro']").val();
+            var ruta = window.location.origin;
+            
+            ruta = ruta.replace('/clients/create', '');
+            
+            $.ajax({
+                url: ruta,
+                data: {filtro: valorFiltro},
+                type: 'GET',
+                dataType: 'json',
+                success: function(data){
+                    $("#ClientsTable").html(data);
+                }
+            })
 
+        }
+    );
     $('<input>')
         .attr({'type':'hidden',"name":"tipo", "value":vista})
         .appendTo(form);
